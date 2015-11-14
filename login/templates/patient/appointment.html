@@ -1,0 +1,71 @@
+<header style="background-color:#545151;" >
+      
+    <div class="container">  
+       
+        <div class="navbar-header">
+    <ul class="nav navbar-nav"><li class="active">
+            <a href="/home">Home</a></li>
+        <li><a href="/home">contact</a></li>
+        <li><a href="/home">About</a></li>
+   
+       
+        
+    </ul></div>
+       
+    </div>
+    
+</header>
+
+    <head> 
+        
+    <title> Login page</title>
+    <meta charset="utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      </head>
+{% extends "base.html" %}
+
+    <head>
+        <title> book appointment </title><script src="jquery-1.6.2.min.js"></script>
+<script src="jquery-ui-1.8.15.custom.min.js"></script>
+<link rel="stylesheet" href="jquery/jqueryCalendar.css">
+<script>
+                jQuery(function() {
+                                jQuery( "#inf_custom_someDateField" ).datepicker();
+                });
+                </script>
+    </head>
+    <body>
+{% block content %}
+<p><i>Welcome {{ user.username }} !!!</i></p>
+<p> <i>You can now book an Appointment</i></p>
+    <form method="post" action=".">{% csrf_token %}
+         <div class="col-sm-offset-1 col-sm-4">
+        <div class="form-group">
+            <label for="inputEmail" class="sr-only">First name</label>
+            <input type="text" name="firstname" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br>
+         <label for="inputEmail" class="sr-only">Doctor's name</label>           
+         Doctor's name:<select name="Doctor_name"> <br>
+                        {% for x in doctor %}
+                            <option value="{{ x.id }}">{{ x }}</option>
+                        {% endfor %}
+                     </select>
+         
+               
+           
+                    <br><br>
+         <label for="inputEmail" class="sr-only">Medial problem</label>  <input type="text" name="Medical problem" id="id_username" class="form-control" placeholder="medical problem" required="required" autofocus="autofocus" /><br>
+         
+        
+         <label for="inputEmail" class="sr-only">Date</label>  <input type="date" name="date" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br>
+        <label for="inputEmail" class="sr-only">Time</label> <input type="time" name="firstname" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br><br>
+        <a href="/user/bookappt/success"> <input type="submit" class="btn btn-info" value="Book"/></a> <br>
+        <a href="/logout/">Logout</a>
+        
+        </div>
+             
+    </form>
+    </body>
+
+{% endblock %}
+  

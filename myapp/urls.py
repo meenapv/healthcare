@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
+from login import views
+from login.views import *
 #include('password_reset.urls')
 
 
@@ -49,5 +50,11 @@ urlpatterns = patterns('',
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm',
         name='password_reset_confirm'),
+        
+    url(r'^user/bookappt/$','login.views.appointment'),
+    url(r'^user/bookappt/success/$','login.views.apptsuccess'),
+    url(r'^user/medical_history/$','login.views.medical'),
+    url(r'^user/billing_history/$','login.views.billing'),
+    url(r'^user/appts_history/$','login.views.doctor_appts')
  
 )

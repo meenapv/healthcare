@@ -38,11 +38,20 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
+    'django_nose',
+    #'schedule',
     #'password_reset',
 )
 THIRD_PARTY_APPS = (
     'south',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=login',
+]
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #'django.core.context_processors.request'
             ],
         },
     },
@@ -92,7 +102,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'hms',
         'USER': 'root',
-        'PASSWORD': 'sidsiri',
+        'PASSWORD': 'vibgyor91',
         'PORT': '3306'
     }
 }
@@ -153,3 +163,5 @@ EMAIL_PORT = 25
 #EMAIL_HOST_USER = 'temp@gmail.com'
 #EMAIL_HOST_PASSWORD = 'password'
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1

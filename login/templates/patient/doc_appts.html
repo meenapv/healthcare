@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <header style="background-color:#545151;" >
+     
+    <div class="container">  
+       
+        <div class="navbar-header">
+    <ul class="nav navbar-nav"><li class="active">
+            <a href="/home">Home</a></li>
+        <li><a href="/home">contact</a></li>
+        <li><a href="/home">About</a></li>
+        
+    </ul></div>
+       
+    </div>
+    
+</header>
+    <head>
+        <title>Your appointments</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <td>Id</td>
+                <td>Patient Name</td>
+                <td>Medical Problem</td>
+                <td>Date</td>
+                <td>Time</td>
+                <td>Prescription</td>
+            </tr>
+            {% for x in appts %}
+            <tr>
+                <td>{{ x.id }}</td>
+                <td>{{ x.patient }}</td>
+                <td>{{ x.medical_problem }}</td>
+                <td>{{ x.date }}</td>
+                <td>{{ x.time }}</td>
+                <td>{{ x.prescription }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

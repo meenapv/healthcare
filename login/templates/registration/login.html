@@ -1,29 +1,70 @@
-<h1> Welcome to Health care Management system !!</h1>
-{% extends "base.html" %}
-    <head> hms </head>
+<header style="background-color:#545151;" >
+     
+    <div class="container">  
+       
+        <div class="navbar-header">
+    <ul class="nav navbar-nav"><li class="active">
+            <a href="/home">Home</a></li>
+        <li><a href="/home">contact</a></li>
+        <li><a href="/home">About</a></li>
+        
+    </ul></div>
+       
+    </div>
+    
+</header>
+
+    <head> 
+        
     <title> Login page</title>
+    <meta charset="utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      </head>
     <body>
-{% block content %}
+        <div class="col-sm-offset-1 col-sm-10"> <br><br>
+        <div class="jumbotron">
+              
+                <h2> Welcome to Hospital Management system !!</h2> 
+ 
+     <p>
+         They cut healthcare and treatment costs, reduce the number of hospital visits, and ensure healthier children, 
+         families and communities.</p>
+   <span class="pull-right">-Seth Berkley</span>
+  
+        </div>
+        </div>  
+        <p>
+        {% block content %}
     {% if form.errors %}
     <p style="color: red">Your username and password didn't match. Please try again.</p>
     {% endif %}
     <form method="post" action=".">{% csrf_token %}
-        <select name="user_role">
-            <option value="Staff"> <a href="Stafflogin.html">Staff</a></option>
-            <option value="Doctor"> <a href="Doclogin.html">Doctor</a></option>
-            <option value="Patient"><a href="patientlogin.html">Patient</a></option>
-            <option value="Admin"><a href="adminlogin.html">Admin</a></option>
-        </select><br><br>
+       
+        <div class="col-sm-offset-1 col-sm-4">
 
-        <table border="0" style="margin-top: 15px; margin-bottom: 15px;">
-            <tr><th><label for="id_username">Username:</label></th><td>{{ form.username }}</td></tr>
-            <tr><th><label for="id_password">Password:</label></th><td>{{ form.password }}</td></tr>
-        </table>
-        <input type="submit" value="Login" />
-        <input type="reset" value="reset">
+<br>
+
+
+        
+         <div class="form-group">
+                    <label for="inputEmail" class="sr-only">Username</label>
+                    <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required="required" autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required="required" />
+                </div>
+        
+        <input type="submit" class="btn btn-info" value="Login" />
+        <input type="reset" class="btn btn-info"  value="reset">
+        <br><br>
+         <a href="/register">Register as patient.</a>
+         <br>
         <a href="/user/password/reset"> Forgot Password </a>
-
+        </div>
         <input type="hidden" name="next" value="/home" />
     </form>
-    <a href="/register">Register as patient.</a>
+    </body>
 {% endblock %}
