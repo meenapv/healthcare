@@ -14,8 +14,11 @@ from .models import UserRole
 from .models import Appt
 from .models import Billing
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 from dateutil.parser import parse as parse_date
+import datetime
+from datetime import datetime, timedelta
 
 @csrf_protect
 def register(request):
@@ -75,6 +78,7 @@ def home(request):
         { 'user': request.user }
         )
 
+@csrf_exempt
 @login_required
 def appointment(request):
     doctor_list=[]
@@ -82,51 +86,63 @@ def appointment(request):
             doctor_list.append(doctor)
     return render_to_response('patient/appointment.html',{'user': request.user, 'doctor': doctor_list})
 
-import datetime
+
 
 @login_required
+#@csrf_protect
 @csrf_exempt
 def apptsuccess(request):
+    flag =True
     p_name = request.user.id
     p_user = User.objects.get(id=p_name)
     d_name = request.POST.get("Doctor_name", "")
     d_user = User.objects.get(id=d_name)
-    medProblem = request.POST.get("medprob", "")
-    date = request.POST.get("date", "")
-    time = request.POST.get("time", "")
+    medProblem = request.POST.get("Medical_problem", "")
+    date_unicode = request.POST.get("date", "")
+    time_unicode = request.POST.get("time1", "")
+    
 
-    if(p_name!=None and p_name!="" and d_name!=None and d_name!='' and medProblem!=None and medProblem!='' and date!=None and date!='' and time!=None and time!="" and parse_date(date) > datetime.datetime.now()):
-        
-        print 'innerloop'
-        
+    if(p_name!=None and p_name!="" and d_name!=None and d_name!='' and medProblem!=None and medProblem!='' and date_unicode!=None and date_unicode!='' and time_unicode!=None and time_unicode!="" and parse_date(date_unicode) > datetime.now()):
         time_list=[]
+        db_date_list=[]
         timedelta_list=[]
         date_list=[]
+        date = datetime.strptime(date_unicode, "%Y-%m-%d")
+        time = datetime.strptime(time_unicode, "%H:%M")
+        calendar_date = datetime.strptime(date_unicode+" " +time_unicode, "%Y-%m-%d %H:%M")
         for a in User.objects.raw('SELECT * FROM login_appt;'):
-            if(a.doctor == d_name):
+            if(a.doctor_id == long(d_name)):
                 time_list.append(a.time)
                 date_list.append(a.date)
-        print 'innerloop1'
-        
-        if(date in date_list): 
-            for t in time_list:
-                timedelta = t.timedelta(minutes=15)
-                if(time>timedelta and time<t):
-                    doctor_list=[]
-                    for doctor in User.objects.raw('SELECT * FROM auth_user a join login_userrole b on a.id=b.user_id where b.role="doctor";'):
-                        doctor_list.append(doctor)
-                    print 'innerloop2'
-                    return render_to_response('patient/appointment.html',{'user': request.user, 'doctor': doctor_list, 'message':'Sorry, There is a time clash, please select a different time.'})
+                db_date_list.append(datetime.combine(a.date,a.time))
+              
+        if(calendar_date in db_date_list):
+            flag=False
+        else:
+            for d in db_date_list:
+                time_added = d + timedelta(minutes=15)
+                if(calendar_date<time_added and calendar_date>d):
+                    flag=False
+                    break
                 else:
-                    print 'innerloop3'
-                    d = Appt.objects.create(patient=p_user,doctor=d_user,medical_problem=medProblem,date=date,time=time)
-                    d.save()
-                    return render_to_response('patient/success.html')       
+                    flag=True
+                    continue
+                                    
+        if flag==False:
+            doctor_list=[]
+            for doctor in User.objects.raw('SELECT * FROM auth_user a join login_userrole b on a.id=b.user_id where b.role="doctor";'):
+                doctor_list.append(doctor)
+            return render_to_response('patient/appointment.html',{'user': request.user, 'doctor': doctor_list, 'message':'Sorry, There is a time clash, please select a different time.'})
+        else:
+            d = Appt.objects.create(patient=p_user,doctor=d_user,medical_problem=medProblem,date=date,time=time)
+            d.save()
+            return render_to_response('patient/success.html',{'user': request.user})
+        
     else:
         doctor_list=[]
         for doctor in User.objects.raw('SELECT * FROM auth_user a join login_userrole b on a.id=b.user_id where b.role="doctor";'):
             doctor_list.append(doctor)
-        return render_to_response('patient/appointment.html',{'user': request.user, 'doctor': doctor_list, 'message':'Please fill in all the details'})
+        return render_to_response('patient/appointment.html',{'user': request.user, 'doctor': doctor_list, 'message':'Either the information you have filled is incorrect or empty. Please check.'})
     d = Appt.objects.create(patient=p_user,doctor=d_user,medical_problem=medProblem,date=date,time=time)
     d.save()
     return render_to_response('patient/success.html',{'user': request.user})

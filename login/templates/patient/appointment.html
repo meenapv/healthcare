@@ -39,11 +39,14 @@
 {% block content %}
 <p><i>Welcome {{ user.username }} !!!</i></p>
 <p> <i>You can now book an Appointment</i></p>
-    <form method="post" action=".">{% csrf_token %}
+{% if message %}
+<div style="color: red">{{ message }}</div>
+{% endif %}
+<form method="post" action="/user/bookappt_success/" > {% csrf_token %}
          <div class="col-sm-offset-1 col-sm-4">
         <div class="form-group">
-            <label for="inputEmail" class="sr-only">First name</label>
-            <input type="text" name="firstname" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br>
+            <label for="inputEmail" class="sr-only" value="{{ user.username }}"> {{ user.username }} </label>
+        
          <label for="inputEmail" class="sr-only">Doctor's name</label>           
          Doctor's name:<select name="Doctor_name"> <br>
                         {% for x in doctor %}
@@ -54,12 +57,16 @@
                
            
                     <br><br>
-         <label for="inputEmail" class="sr-only">Medial problem</label>  <input type="text" name="Medical problem" id="id_username" class="form-control" placeholder="medical problem" required="required" autofocus="autofocus" /><br>
+         <label for="inputEmail" class="sr-only">Medical problem</label>  <input type="text" name="Medical_problem" id="id_username" class="form-control" placeholder="medical problem" required="required" autofocus="autofocus" /><br>
          
         
          <label for="inputEmail" class="sr-only">Date</label>  <input type="date" name="date" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br>
-        <label for="inputEmail" class="sr-only">Time</label> <input type="time" name="firstname" id="id_username" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br><br>
-        <a href="/user/bookappt/success"> <input type="submit" class="btn btn-info" value="Book"/></a> <br>
+        <label for="inputEmail" class="sr-only">Time</label> <input type="time" name="time1" class="form-control" placeholder="firstname" required="required" autofocus="autofocus" /><br><br>
+       <a href="/user/bookappt_success">
+           
+       </a> 
+        <input type="submit" class="btn btn-info" value="Book"/>
+        <br>
         <a href="/logout/">Logout</a>
         
         </div>

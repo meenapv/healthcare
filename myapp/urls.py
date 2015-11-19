@@ -52,7 +52,7 @@ urlpatterns = patterns('',
         name='password_reset_confirm'),
         
     url(r'^user/bookappt/$','login.views.appointment'),
-    url(r'^user/bookappt/success/$','login.views.apptsuccess'),
+    url(r'^user/bookappt_success/$','login.views.apptsuccess'),
     url(r'^user/medical_history/$','login.views.medical'),
     url(r'^user/billing_history/$','login.views.billing'),
     url(r'^user/appts_history/$','login.views.doctor_appts')
