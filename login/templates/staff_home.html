@@ -27,5 +27,11 @@
 {% block content %}
     <p>Welcome {{ user.username }} !!!</p>
     <p>This is a staff home page</p>
+    <form  method="post">
+        <a href="/user/sanction_leave">
+            <button type="button" name="Sanction_Leave" class="btn btn-info">Sanction Leave Request</button><br></a><br> <br>
+        
+      </form>
+    
     <a href="/logout/">Logout</a>
 {% endblock %}

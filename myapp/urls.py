@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from login import views
 from login.views import *
+from django.conf import settings
 #include('password_reset.urls')
 
 
@@ -55,6 +56,15 @@ urlpatterns = patterns('',
     url(r'^user/bookappt_success/$','login.views.apptsuccess'),
     url(r'^user/medical_history/$','login.views.medical'),
     url(r'^user/billing_history/$','login.views.billing'),
-    url(r'^user/appts_history/$','login.views.doctor_appts')
+    url(r'^user/viewappointments/$','login.views.viewappointments'),
+    #url(r'^media/$',settings.MEDIA_URL),
+    url(r'^user/appts_history/$','login.views.doctor_appts'),
+    url(r'^user/appts_history/upload/$','login.views.upload_prescription'),
+    url(r'^download/(?P<file_name>.+)$', 'login.views.download'),
+    
+    url(r'^user/leaverequest/$','login.views.doctor_leave_req'),
+    url(r'^user/leaverequest_success/$','login.views.doctor_leave_success'),
+    url(r'^user/leavehistory/$','login.views.doctor_list_leaves'),
+    url(r'^user/sanction_leave/$','login.views.staff_views_leaves')
  
 )

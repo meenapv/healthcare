@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <header style="background-color:#545151;" >
+     
+    <div class="container">  
+       
+        <div class="navbar-header">
+    <ul class="nav navbar-nav"><li class="active">
+            <a href="/home">Home</a></li>
+        <li><a href="/home">contact</a></li>
+        <li><a href="/home">About</a></li>
+        
+    </ul></div>
+       
+    </div>
+    
+</header>
+    <head>
+        <title>Leave history</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        {% if reqs.count > 0 %}
+
+        <table border="1">
+            <tr>
+                <td>Date of leave applied</td>
+                <td>Reason for leave</td>
+                <td>No. of leaves allowed for this year</td>
+                <td>Status of the request</td>
+            </tr>
+            {% for x in reqs %}
+            <tr>
+                <td>{{ x.date_of_leave }}</td>
+                <td>{{ x.reason }}</td>
+                <td>{{ x.leave_limit }}</td>
+                <td>{{ x.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div>No records found.</div>
+        {% endif %}        
+    </body>
+</html>

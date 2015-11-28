@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = 'C:/hms_Documents/'
+MEDIA_URL = '/media/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -102,7 +104,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'hms',
         'USER': 'root',
-        'PASSWORD': 'vibgyor91',
+        'PASSWORD': 'sidsiri',
         'PORT': '3306'
     }
 }
@@ -121,6 +123,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

@@ -1,8 +1,13 @@
 #files.py
-import re
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file',
+        help_text='max. 42 megabytes'
+    )
  
 class RegistrationForm(forms.Form):
  
@@ -14,16 +19,30 @@ class RegistrationForm(forms.Form):
 
     def clean_username(self):
         try:
-            user = User.objects.get(username__iexact=self.cleaned_data['username'])
+            User = User.objects.get(username__iexact=self.cleaned_data['username'])
         except User.DoesNotExist:
             return self.cleaned_data['username']
         raise forms.ValidationError(_("The username already exists. Please try another one."))
  
     def clean(self):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(_("The two password fields did not match."))
-        return self.cleaned_data
+                if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+                 raise forms.ValidationError(_("The two password fields did not match."))
+        else:
+         return self.cleaned_data
     
 class PasswordResetRequestForm(forms.Form):
     email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
+    
+from django import forms
+
+#class UploadFileForm(forms.Form):
+   # print "entering upload file form"
+#    title = forms.CharField(max_length=50)
+  #  print "entering upload file form after title"
+ #   file = forms.FileField()
+    #print "exiting upload file form"
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file',
+    )

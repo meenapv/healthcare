@@ -1,0 +1,33 @@
+
+<header style="background-color:#545151;" >
+     
+    <div class="container">  
+       
+        <div class="navbar-header">
+    <ul class="nav navbar-nav"><li class="active">
+            <a href="/home">Home</a></li>
+        <li><a href="/home">contact</a></li>
+        <li><a href="/home">About</a></li>
+        
+    </ul></div>
+       
+    </div>
+    
+</header>
+
+    <head> 
+        
+    <title> Login page</title>
+    <meta charset="utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      </head>
+      {% extends "base.html" %}
+{% block title %}Leave request {% endblock %}
+{% block head %}
+ The request is processed successfully
+{% endblock %}
+{% block content %}
+    Please wait for the management to sanction.
+    <a href="/home">Home</a> 
+{% endblock %}

@@ -75,3 +75,78 @@ class TestViews(TestCase):
         response = self.client.get(reverse('login.views.doctor_appts'))
         if(response.content.find("testuser")==-1):
             nt.assert_false
+			
+	def test_doctor_leave_request(self);
+        self.client.login(username='testuser', password='password')
+        response = self.client.get(reserve('login.views.doctor_leave_req'))
+        if(response.content.find("leaveapplication")==-1:
+        nt:assert_false
+		
+	def test_doctor_leave_positve(self);
+		self.client.login(username='testuser',password='password')
+		response = self.client.post('/user/doctorleave/',{'Leave_reason': 'personal', "date" : "2015-12-20")
+		if (response.content.find("Leave applied")==-1):
+		nt.assert_false
+
+	def test_doctor_leave_negative(self);
+		self.client.login(username='testuser',password='password')
+		response = self.client.post('/user/doctorleave/',{'Leave_reason': 'personal', "date" : "2015-12-20")
+		if (response.content.find("Leave application not successful")==-1):
+			nt.assert_false
+
+
+	def test_doctor_leave_list_request(self):
+		self.client.login(username='testuser',password='password')
+		response = self.client.get(reserve('login.view.leave_list'))
+		if(response.content.find("leave lists")==-1):
+			nt.assert_false
+
+	def test_staff_views_leaves_data(self);
+		self.client.login(username='testuser',password='password')
+		response = self.client.get(reserve('login.views.staff_views_leave_req'))
+		if(response.content.find("Leave views")==-1):
+			nt:assert_false
+
+	def test_staff_views_leaves_request(self);
+        self.client.login(username='testuser',password='password')
+        response = self.client.get(reserve('login.views.staff_views_leave_req'))
+        if(response.content.find("Leave views")==-1):
+			nt:assert_false
+
+
+	def test_staff_views_leaves_positive(self);
+        self.client.login(username='testuser' , password= 'password')
+        response = self.client.post('/user/doctorleave/',{'Leave_reason': 'personal', "date" : "2015-12-20")
+        doctor = User.object.filter(username="testuser")
+        if(leave.objects.filter(leave_list=5).exits()):
+			if (response.content.find("	leave approved")==-1):
+				nt.assert_false
+
+
+	def test_staff_views_leave_negative(self);
+        self.client.login(username= 'testuser' , password= 'password')
+        response = self.client.post('/user/doctorleave/',{'Leave_reason': 'personal', "date" : "2015-12-20")
+        doctor = User.object.filter(username="testuser")
+        if(leave.objects.filter(leave_list=5).exits()):
+			if (response.content.find("	leave not approved")==-1):
+				nt.assert_false
+
+	def test_viewappointments_request(self):
+        self.client.login(username= 'testuser' , password= 'password')
+        response = self.client.get(reserve('login.view.viewappointments'))
+        if(response.content.find("leave requests")==-1):
+			nt.assert_false
+
+	def test_doctor_appts(self):
+        self.client.login(username='testuser', password='password')
+        response = self.client.get(reverse('login.views.doctor_appts'))
+        if(response.content.find("Your appointments")==-1):
+            nt.assert_false
+
+	def test_download(request,file_name):
+        testfile = get_object_or_404(TestResultFile, pk=file_id)
+		wrapper = FileWrapper(file(file_path,'rb'))
+        response=HttpResponse(wrapper , content_type="file_mimetype)
+        response['Content-disposition'] = 'attachment;
+        filename=%s' % smart_str(file_name)
+        nt.assert_false

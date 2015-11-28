@@ -28,27 +28,65 @@ and open the template in the editor.
         <meta charset="utf-8">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    </head>
-    <body>
+    </head><br><br><br><br><br>
+    <body><center>
+                       {% if document_success %}
+                        <p> Successfully Uploaded</p>
+                       {% endif %}
+
         <table border="1">
             <tr>
-                <td>Id</td>
-                <td>Patient Name</td>
-                <td>Medical Problem</td>
-                <td>Date</td>
-                <td>Time</td>
-                <td>Prescription</td>
+                
+                <th>Patient Name</th>
+                <th>Medical Problem</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Prescription</th>
+                <th>Appointment Status</th>
             </tr>
             {% for x in appts %}
+           
             <tr>
-                <td>{{ x.id }}</td>
+                
+                
                 <td>{{ x.patient }}</td>
                 <td>{{ x.medical_problem }}</td>
                 <td>{{ x.date }}</td>
                 <td>{{ x.time }}</td>
-                <td>{{ x.prescription }}</td>
+                <td>
+                    {% if x.prescription %}
+                    <a href="download/{{x.prescription}}"> prescription </a>
+                    {% endif %}
+
+        <!-- Upload form. Note enctype attribute! -->
+                   <form action="/user/appts_history/upload/" method="post" enctype="multipart/form-data">
+                         {% csrf_token %}
+                    <input type="hidden" value={{x.id}} name="appt_id">
+                    <p>{{ form.non_field_errors }}</p>
+                    <p>{{ form.docfile.label_tag }}</p>
+                    <p>
+                        {{ form.docfile.errors }}
+                         {{ form.docfile }}
+                    </p>
+                    <input id="id_docfile" name="docfile" type="file">
+                    <p><input type="submit" value="Upload" /></p>
+
+                   <!-- <form action="/user/appts_history/upload/" method="post" enctype="multipart/form-data">
+
+                                                <input type="file" id="file" name="prescription"> 
+<p><input type="submit" value="upload" /></p>!-->
+                    </form>
+                </td>
+                <td>
+                    {% if x.date in leaves %}
+                    <p style="color:red;">{{ 'Appointment Cancelled' }}</p>
+                    {% else %}
+                        {{ 'Appointment Scheduled' }}
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>
+        </center>
     </body>
 </html>

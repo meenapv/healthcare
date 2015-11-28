@@ -44,7 +44,11 @@ and open the template in the editor.
                 <td>{{ x.medical_problem }}</td>
                 <td>{{ x.date }}</td>
                 <td>{{ x.time }}</td>
-                <td>{{ x.prescription }}</td>
+                <td>
+                    {% if x.prescription %}
+                    <a href={{x.prescription}}> prescription </a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>

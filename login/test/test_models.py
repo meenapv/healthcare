@@ -34,3 +34,8 @@ class TestModels(TestCase):
 #        patient = User.objects.filter(id="testuser")
 #        w = Billing.objects.create(patient=patient, reason="consulting", date="2015-01-01",amount="400",status="paid")
 #        self.assertTrue(isinstance(w, Billing))
+
+	def test_leave(self):
+		doctor = User.object.get(username="doctoruser")
+		w = Leave.object.create(reason = personal, date = "2015-01-05", Curent-year= "2015", leave_limit= "5" , Status= "approved", is_latest="true")
+		self.assertTrue(isinstance(w, leave)
